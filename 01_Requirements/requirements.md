@@ -1,215 +1,163 @@
 # Requirements
 
-## 1. Business Requirements
-
-**BR-01 – Consistent Customer View**  
-The bank needs a consistent dataset presenting customer activity.
-
-**BR-02 – Transaction Activity Analysis**  
-The solution should enable analysis of the number and value of customer transactions.
-
-**BR-03 – Customer Analysis**  
-The data should support customer analysis by `CUSTOMER_TYPE` and `REGION`.
-
-**BR-04 – Time-Based Analysis**  
-Users should be able to analyse customer activity for a selected time period.
-
-**BR-05 – Reporting and Further Analysis**  
-The prepared data should be available for reporting and further analysis.
-
-**BR-06 – Controlled Data Access**  
-Access to data should depend on the user's role and area of responsibility, including regional access where applicable.
+This document defines the key requirements for the Banking Customer Activity Analysis project. It describes the business need, project objective, scope, expected outcome, and the main business, functional, and non-functional requirements.
 
 ---
 
-## 2. Functional Requirements
+<details>
+<summary><strong>1. Context / Business Need</strong></summary>
 
-**FR-01 – Analysis Period**  
-The solution should allow users to select and change the analysis period.
+The bank has customer, transaction, and branch-related data stored in separate data sources. To perform consistent customer activity analysis, these datasets need to be understood, combined, and prepared for reporting and further analysis.
 
-**FR-02 – Default Analysis Period**  
-By default, the analysis should cover the last three months relative to the most recent transaction date available in the dataset.
+The current data is distributed across:
 
-**FR-03 – Customer-Level KPIs**  
-The solution should provide the following KPIs at customer level:
+- `CUSTOMER_DATA` – customer information
+- `TRANSACTION_DATA` – transaction and financial activity
+- `BANK_DATA` – branch and regional information
 
-- `NUMBER_OF_TRANSACTIONS`
-- `TOTAL_TRANSACTION_AMOUNT`
-- `AVG_TRANSACTION_AMOUNT`
-- `LAST_TRANSACTION_DATE`
+The main business need is to create a consistent customer activity view that combines customer characteristics with transaction activity and relevant regional information.
 
-**FR-04 – Active Customer Definition**  
-The solution should identify a customer as active if the customer has made at least three transactions during the selected analysis period.
+This will support reporting, customer activity analysis, segmentation, and further analytical use cases.
 
-**FR-05 – Include All Customers**  
-The target dataset should include all customers, including customers with no transactions during the selected analysis period.
-
-**FR-06 – Filtering**  
-Users should be able to filter the data by at least:
-
-- `CUSTOMER_TYPE`
-- `REGION`
-- analysis period
-
-**FR-07 – Aggregation**  
-The solution should support analysis at customer level and aggregation by `CUSTOMER_TYPE` and `REGION`.
-
-**FR-08 – Data Export**  
-Authorized users should be able to export a selected dataset, for example to CSV or Excel.
-
-**FR-09 – Reporting**  
-The prepared dataset should be suitable for use in Power BI and other reporting solutions.
-
-**FR-10 – Source Data Protection**  
-Users should not be able to modify source data.
+</details>
 
 ---
 
-## 3. Non-Functional Requirements
+<details>
+<summary><strong>2. Objective</strong></summary>
 
-**NFR-01 – Data Quality**  
-The solution should support controls for data completeness, consistency and accuracy.
+The objective of the project is to design and prepare a consistent customer activity dataset that enables analysis of:
 
-**NFR-02 – Security**  
-Access to data should be role-based.
+- customer transaction activity
+- transaction volume and value
+- customer types and segments
+- regional differences
+- time-based activity
+- active and inactive customers
 
-**NFR-03 – Regional Data Access**  
-Regional users should only have access to data for their assigned region, according to their permissions.
+The solution should provide a structured and traceable approach from source data to analytical output.
 
-**NFR-04 – Read-Only Access**  
-Business users should have read-only access to source data.
-
-**NFR-05 – Data Refresh**  
-The solution should support data refresh in line with the source systems, with daily refresh assumed for this project.
-
-**NFR-06 – Data Traceability**  
-It should be possible to trace data from the source through transformations to the target dataset.
-
-**NFR-07 – Maintainability**  
-The solution should be structured so that the target dataset can be maintained and extended for future analytical needs.
+</details>
 
 ---
 
-## 4. Business Rules
+<details>
+<summary><strong>3. Scope</strong></summary>
 
-**BRL-01 – Active Customer**  
-A customer is considered active if they have made at least three transactions during the selected analysis period.
+### In Scope
 
-**BRL-02 – Total Transaction Amount**  
-`TOTAL_TRANSACTION_AMOUNT` is the sum of all valid customer transactions within the selected analysis period.
+- Analysis of customer, transaction, and branch data
+- Data source identification and understanding
+- Data quality assessment
+- Definition of business and functional requirements
+- Definition of business rules
+- Data mapping and data modelling
+- Data flow and data lineage documentation
+- As-Is and To-Be analysis
+- Gap analysis
+- Process analysis
+- Solution design
+- Preparation of a target analytical dataset
+- SQL-based data analysis in Snowflake
+- Power BI reporting
+- Basic API integration analysis
+- Documentation of the solution and analytical process
 
-**BRL-03 – Average Transaction Amount**  
-`AVG_TRANSACTION_AMOUNT` is calculated as:
+### Out of Scope
 
-`TOTAL_TRANSACTION_AMOUNT / NUMBER_OF_TRANSACTIONS`
+- Modification of source systems
+- Production implementation of data pipelines
+- Development of production APIs
+- Advanced machine learning models
+- Real-time production integration
+- Changes to source data structures
 
-**BRL-04 – Last Transaction Date**  
-`LAST_TRANSACTION_DATE` is the latest transaction date for the customer within the selected analysis period.
-
-**BRL-05 – Customers Without Transactions**  
-Customers without transactions during the selected period remain in the target dataset.
-
-For such customers:
-
-- `NUMBER_OF_TRANSACTIONS = 0`
-- `TOTAL_TRANSACTION_AMOUNT = 0`
-- `AVG_TRANSACTION_AMOUNT = NULL`
-- `LAST_TRANSACTION_DATE = NULL`
-- customer status = `Inactive`
-
-**BRL-06 – Missing Customer Type**  
-If `CUSTOMER_TYPE` is missing, it should be classified as `Unknown`.
-
-**BRL-07 – Invalid Customer ID**  
-A transaction without a valid `CUSTOMER_ID` should not be assigned to a customer and should be reported as a data quality issue.
-
-**BRL-08 – Duplicate Transactions**  
-Confirmed duplicate transactions should not inflate customer-level KPIs.
+</details>
 
 ---
 
-## 5. Data Sources
+<details>
+<summary><strong>4. Expected Outcome</strong></summary>
 
-| Source | Purpose | Data Owner |
-|---|---|---|
-| `CUSTOMER_DATA` | Customer information | Customer Domain |
-| `TRANSACTION_DATA` | Customer transaction information | Transaction / Payments Domain |
-| `BANK_DATA` | Branch information | Branch Operations |
+The expected outcome is a structured analytical solution that provides:
 
-### Source Relationships
+- a consistent customer-level view of activity
+- transaction activity metrics
+- customer and regional analysis
+- time-based analysis
+- defined business rules
+- documented data mappings and relationships
+- documented data flows and lineage
+- identified data quality issues
+- clear As-Is and To-Be states
+- a proposed target solution
+- reporting-ready data for Power BI
 
-`CUSTOMER_DATA.CUSTOMER_ID` ↔ `TRANSACTION_DATA.CUSTOMER_ID`
+The solution should also provide sufficient documentation to allow another analyst or stakeholder to understand how the data is sourced, transformed, validated, and used.
 
-`CUSTOMER_DATA.BRANCH_ID` ↔ `BANK_DATA.BRANCH_ID`
-
----
-
-## 6. Data Sourcing and Data Understanding
-
-The solution will use data from three source systems:
-
-### `CUSTOMER_DATA`
-Source: Customer Management System / CRM / Customer Master Data
-
-Provides basic customer information.
-
-### `TRANSACTION_DATA`
-Source: Transaction Processing System
-
-Provides customer transaction information.
-
-### `BANK_DATA`
-Source: Branch Management System
-
-Provides branch information.
+</details>
 
 ---
 
-## 7. Data Refresh
+<details>
+<summary><strong>5. Business Requirements</strong></summary>
 
-- `TRANSACTION_DATA` – refreshed daily
-- `CUSTOMER_DATA` – refreshed daily
-- `BANK_DATA` – refreshed daily
+| ID | Business Requirement |
+|---|---|
+| BR-01 | Provide a consistent view of customers and their activity across relevant data sources. |
+| BR-02 | Enable analysis of customer transaction activity, including transaction count and transaction value. |
+| BR-03 | Enable customer analysis by customer type and region. |
+| BR-04 | Enable time-based analysis using a configurable analysis period. |
+| BR-05 | Provide data that can be used for reporting and further analytical activities. |
+| BR-06 | Support controlled access to analytical data according to business and regional access requirements. |
 
----
-
-## 8. Data Quality
-
-Known or potential data quality issues include:
-
-- missing `CUSTOMER_TYPE`
-- transactions with missing or invalid `CUSTOMER_ID`
-- possible duplicate transactions
-- missing `TRANSACTION_AMOUNT`
-- inconsistent keys or data types between source systems
-
-The solution should identify and appropriately handle these issues.
+</details>
 
 ---
 
-## 9. Data Governance and Data Ownership
+<details>
+<summary><strong>6. Functional Requirements</strong></summary>
 
-Data Owners are responsible for the business ownership of source data, including:
+| ID | Functional Requirement |
+|---|---|
+| FR-01 | The solution shall allow the analysis period to be selected or changed. |
+| FR-02 | The default analysis period shall cover the last three months relative to the latest available transaction date. |
+| FR-03 | The solution shall calculate the number of transactions per customer for the selected period. |
+| FR-04 | The solution shall calculate the total transaction amount per customer for the selected period. |
+| FR-05 | The solution shall calculate the average transaction amount per customer for the selected period. |
+| FR-06 | The solution shall provide the latest transaction date for each customer within the selected period. |
+| FR-07 | The solution shall identify active customers based on the defined business rule. |
+| FR-08 | The target dataset shall include all customers, including customers with no transactions in the selected period. |
+| FR-09 | The data shall support filtering and aggregation by customer type, region, and analysis period. |
+| FR-10 | The target data shall be suitable for reporting and visualization in Power BI. |
 
-- business definitions
-- data usage rules
-- data access approval
-- accountability for data quality and usage
-
-The Data Analyst is responsible for analysis, documentation and solution preparation, but is not the Data Owner.
-
-For the target `CUSTOMER_ACTIVITY` dataset, the assumed Data Owner is:
-
-**Customer Analytics Data Owner / Customer Domain Owner**
+</details>
 
 ---
 
-## 10. Data Access
+<details>
+<summary><strong>7. Non-Functional Requirements</strong></summary>
 
-Access to the three source datasets should initially be **read-only**.
+| ID | Non-Functional Requirement |
+|---|---|
+| NFR-01 | The solution shall include data quality controls covering completeness, consistency, and validity. |
+| NFR-02 | Access to analytical data shall follow role-based access principles. |
+| NFR-03 | Where applicable, access shall support regional restrictions. |
+| NFR-04 | Source data shall be accessed in read-only mode and shall not be modified by the analytical solution. |
+| NFR-05 | The analytical dataset is assumed to be refreshed daily. |
+| NFR-06 | The solution shall provide traceability from analytical output back to the relevant source data. |
+| NFR-07 | The solution and its documentation shall be maintainable and understandable for future users or analysts. |
 
-The access process is:
+</details>
 
-**Data Owner approval → IAM / Data Access → technical access provisioning**
+---
 
-The Data Analyst requests access and provides the business purpose for using the data.
+## Related Documentation
+
+The following topics are documented separately as part of the project:
+
+- [Business Rules](../03_Business_Rules/business_rules.md)
+- [Data Sourcing & Data Understanding](../04_Sources_Data_Understanding/sources_data_understanding.md)
+- [Data Quality](../05_Data_Quality/data_quality.md)
+- [Data Governance & Data Ownership](../06_Data_Governance_Ownership/data_governance_ownership.md)
+- [Acceptance Criteria](../02_User_Story_Acceptance_Criteria/acceptance_criteria.md)
