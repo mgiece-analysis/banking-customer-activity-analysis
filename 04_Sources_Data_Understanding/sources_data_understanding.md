@@ -118,15 +118,103 @@ The main relationships between the three datasets are:
 
 ```text
 CUSTOMER_DATA
-     |
-     | CUSTOMER_ID
-     |
-     v
+      │
+      │ CUSTOMER_ID
+      ↓
 TRANSACTION_DATA
 
 CUSTOMER_DATA
-     |
-     | BRANCH_ID
-     |
-     v
+      │
+      │ BRANCH_ID
+      ↓
 BANK_DATA
+```
+
+### Relationship Description
+
+- `CUSTOMER_DATA.CUSTOMER_ID` → `TRANSACTION_DATA.CUSTOMER_ID`
+- `CUSTOMER_DATA.BRANCH_ID` → `BANK_DATA.BRANCH_ID`
+
+These relationships allow customer information to be combined with transaction activity and branch-related information.
+
+</details>
+
+---
+
+<details>
+<summary><strong>6. Source-to-Analysis Usage</strong></summary>
+
+| Analytical Requirement | Primary Source |
+|---|---|
+| Customer population | `CUSTOMER_DATA` |
+| Customer type analysis | `CUSTOMER_DATA` |
+| Regional customer analysis | `CUSTOMER_DATA` |
+| Transaction count | `TRANSACTION_DATA` |
+| Transaction value | `TRANSACTION_DATA` |
+| Time-based transaction analysis | `TRANSACTION_DATA` |
+| Branch information | `BANK_DATA` |
+| Branch region analysis | `BANK_DATA` |
+| Customer-to-branch relationship | `CUSTOMER_DATA` + `BANK_DATA` |
+
+The sources are combined only when required by the analytical use case.
+
+</details>
+
+---
+
+<details>
+<summary><strong>7. Data Refresh</strong></summary>
+
+For the purpose of this project, a daily refresh cycle is assumed for the analytical data sources.
+
+The refresh assumption is documented as part of the project requirements and can be adjusted in a production environment according to business needs and source-system capabilities.
+
+</details>
+
+---
+
+<details>
+<summary><strong>8. Initial Data Understanding Findings</strong></summary>
+
+The initial review identified several points relevant for further analysis:
+
+- Missing values exist in selected customer attributes.
+- Missing `FIRM_REVENUE` values exist in `BANK_DATA`.
+- Customer and transaction data can be linked using `CUSTOMER_ID`.
+- Customer and branch data can be linked using `BRANCH_ID`.
+- Transaction dates support configurable time-based analysis.
+- Customer-level analysis requires preserving customers with no transactions in the selected period.
+
+These findings will be further addressed in the Data Quality, Data Mapping, and Data Modelling documentation.
+
+</details>
+
+---
+
+<details>
+<summary><strong>9. Data Ownership</strong></summary>
+
+For the purpose of the project, the following data ownership model is assumed:
+
+| Data Source | Business Owner |
+|---|---|
+| `CUSTOMER_DATA` | Customer Domain |
+| `TRANSACTION_DATA` | Transaction / Payments Domain |
+| `BANK_DATA` | Branch Operations |
+
+Data Owners are responsible for business definitions, data ownership, and access approval. Technical access is provisioned through the appropriate access management process.
+
+Detailed governance and ownership responsibilities are documented separately.
+
+</details>
+
+---
+
+## Related Documentation
+
+- [Requirements](../01_Requirements/requirements.md)
+- [Business Rules](../03_Business_Rules/business_rules.md)
+- [Data Quality](../05_Data_Quality/data_quality.md)
+- [Data Governance & Data Ownership](../06_Data_Governance_Ownership/data_governance_ownership.md)
+- [Data Mapping](../C_Data/01_Data_Mapping/data_mapping.md)
+- [Data Modelling](../C_Data/02_Data_Modelling/data_modelling.md)
