@@ -96,15 +96,11 @@ A simplified access process used in this project is:
 
 ```text
 Business / Data Owner Approval
-            |
-            v
-      Access Request
-            |
-            v
-     IAM / Access Team
-            |
-            v
-    Technical Provisioning
-            |
-            v
-       Read-Only Access
+        ↓
+Access Request
+        ↓
+IAM / Access Team
+        ↓
+Technical Provisioning
+        ↓
+Read-Only Access
