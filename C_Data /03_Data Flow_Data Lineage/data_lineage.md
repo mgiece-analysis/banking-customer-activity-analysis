@@ -63,14 +63,18 @@ The focus is on the data elements that are important for customer activity analy
 
 The customer identifier originates from `CUSTOMER_DATA`.
 
-```text
-CUSTOMER_DATA.CUSTOMER_ID
-            ↓
-Customer Base Population
-            ↓
-Customer-Level Analytical Record
-            ↓
-CUSTOMER_ACTIVITY.CUSTOMER_ID
+The following diagram was created using Mermaid and is rendered directly in GitHub Markdown.
+
+```mermaid
+flowchart TD
+    A["CUSTOMER_DATA.CUSTOMER_ID"]
+    B["Customer Base Population"]
+    C["Customer-Level Analytical Record"]
+    D["CUSTOMER_ACTIVITY.CUSTOMER_ID"]
+
+    A --> B
+    B --> C
+    C --> D
 ```
 
 `CUSTOMER_ID` is also used to associate customer records with transaction data.
@@ -86,18 +90,22 @@ The identifier remains unchanged during the main analytical transformation.
 
 The `TRANSACTION_COUNT` metric is derived from transaction records.
 
-```text
-TRANSACTION_DATA.TRANSACTION_ID
-            ↓
-Filter by Selected Analysis Period
-            ↓
-Validate Transaction / Customer Relationship
-            ↓
-Group by CUSTOMER_ID
-            ↓
-COUNT Valid Transactions
-            ↓
-CUSTOMER_ACTIVITY.TRANSACTION_COUNT
+The following diagram was created using Mermaid and is rendered directly in GitHub Markdown.
+
+```mermaid
+flowchart TD
+    A["TRANSACTION_DATA.TRANSACTION_ID"]
+    B["Filter by Selected Analysis Period"]
+    C["Validate Transaction / Customer Relationship"]
+    D["Group by CUSTOMER_ID"]
+    E["COUNT Valid Transactions"]
+    F["CUSTOMER_ACTIVITY.TRANSACTION_COUNT"]
+
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
 ```
 
 The metric is calculated using valid transactions associated with each customer.
@@ -117,18 +125,22 @@ This follows the defined Business Rules.
 
 The `TOTAL_TRANSACTION_AMOUNT` metric is derived from `TRANSACTION_AMOUNT`.
 
-```text
-TRANSACTION_DATA.TRANSACTION_AMOUNT
-            ↓
-Filter by Selected Analysis Period
-            ↓
-Validate Transaction Data
-            ↓
-Group by CUSTOMER_ID
-            ↓
-SUM Valid Transaction Amounts
-            ↓
-CUSTOMER_ACTIVITY.TOTAL_TRANSACTION_AMOUNT
+The following diagram was created using Mermaid and is rendered directly in GitHub Markdown.
+
+```mermaid
+flowchart TD
+    A["TRANSACTION_DATA.TRANSACTION_AMOUNT"]
+    B["Filter by Selected Analysis Period"]
+    C["Validate Transaction Data"]
+    D["Group by CUSTOMER_ID"]
+    E["SUM Valid Transaction Amounts"]
+    F["CUSTOMER_ACTIVITY.TOTAL_TRANSACTION_AMOUNT"]
+
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
 ```
 
 Customers without transactions receive:
@@ -144,20 +156,25 @@ Customers without transactions receive:
 
 The `AVG_TRANSACTION_AMOUNT` metric is derived from valid transaction amounts.
 
-```text
-TRANSACTION_DATA.TRANSACTION_AMOUNT
-            ↓
-Filter by Selected Analysis Period
-            ↓
-Aggregate by CUSTOMER_ID
-            ↓
-Calculate Total Amount
-            ↓
-Calculate Transaction Count
-            ↓
-TOTAL / COUNT
-            ↓
-CUSTOMER_ACTIVITY.AVG_TRANSACTION_AMOUNT
+The following diagram was created using Mermaid and is rendered directly in GitHub Markdown.
+
+```mermaid
+flowchart TD
+    A["TRANSACTION_DATA.TRANSACTION_AMOUNT"]
+    B["Filter by Selected Analysis Period"]
+    C["Aggregate by CUSTOMER_ID"]
+    D["Calculate Total Amount"]
+    E["Calculate Transaction Count"]
+    F["TOTAL / COUNT"]
+    G["CUSTOMER_ACTIVITY.AVG_TRANSACTION_AMOUNT"]
+
+    A --> B
+    B --> C
+    C --> D
+    C --> E
+    D --> F
+    E --> F
+    F --> G
 ```
 
 When a customer has no transactions during the selected period:
@@ -173,16 +190,20 @@ When a customer has no transactions during the selected period:
 
 The `LAST_TRANSACTION_DATE` metric is derived from transaction dates.
 
-```text
-TRANSACTION_DATA.TRANSACTION_DATE
-            ↓
-Filter by Selected Analysis Period
-            ↓
-Group by CUSTOMER_ID
-            ↓
-MAX(TRANSACTION_DATE)
-            ↓
-CUSTOMER_ACTIVITY.LAST_TRANSACTION_DATE
+The following diagram was created using Mermaid and is rendered directly in GitHub Markdown.
+
+```mermaid
+flowchart TD
+    A["TRANSACTION_DATA.TRANSACTION_DATE"]
+    B["Filter by Selected Analysis Period"]
+    C["Group by CUSTOMER_ID"]
+    D["MAX(TRANSACTION_DATE)"]
+    E["CUSTOMER_ACTIVITY.LAST_TRANSACTION_DATE"]
+
+    A --> B
+    B --> C
+    C --> D
+    D --> E
 ```
 
 Customers without transactions during the selected period receive:
@@ -198,19 +219,25 @@ Customers without transactions during the selected period receive:
 
 `ACTIVITY_STATUS` is a derived business classification.
 
-```text
-TRANSACTION_DATA.TRANSACTION_ID
-            ↓
-Filter by Selected Analysis Period
-            ↓
-Count Valid Transactions by CUSTOMER_ID
-            ↓
-Apply Activity Rule
-            ↓
-If count >= 3 → Active
-If count < 3 → Inactive
-            ↓
-CUSTOMER_ACTIVITY.ACTIVITY_STATUS
+The following diagram was created using Mermaid and is rendered directly in GitHub Markdown.
+
+```mermaid
+flowchart TD
+    A["TRANSACTION_DATA.TRANSACTION_ID"]
+    B["Filter by Selected Analysis Period"]
+    C["Count Valid Transactions by CUSTOMER_ID"]
+    D["Apply Activity Rule"]
+    E["count >= 3 → Active"]
+    F["count < 3 → Inactive"]
+    G["CUSTOMER_ACTIVITY.ACTIVITY_STATUS"]
+
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    D --> F
+    E --> G
+    F --> G
 ```
 
 The activity classification is based on the Business Rule:
@@ -226,14 +253,18 @@ The activity classification is based on the Business Rule:
 
 The customer type originates from `CUSTOMER_DATA`.
 
-```text
-CUSTOMER_DATA.CUSTOMER_TYPE
-            ↓
-Check for Missing Value
-            ↓
-Missing Value → Unknown
-            ↓
-CUSTOMER_ACTIVITY.CUSTOMER_TYPE
+The following diagram was created using Mermaid and is rendered directly in GitHub Markdown.
+
+```mermaid
+flowchart TD
+    A["CUSTOMER_DATA.CUSTOMER_TYPE"]
+    B["Check for Missing Value"]
+    C["Missing Value → Unknown"]
+    D["CUSTOMER_ACTIVITY.CUSTOMER_TYPE"]
+
+    A --> B
+    B --> C
+    C --> D
 ```
 
 A missing customer type does not exclude the customer from the analytical dataset.
@@ -249,22 +280,30 @@ Regional information can be derived from customer and branch-related data.
 
 ### Customer Region
 
-```text
-CUSTOMER_DATA.REGION
-          ↓
-CUSTOMER_ACTIVITY.REGION
+The following diagram was created using Mermaid and is rendered directly in GitHub Markdown.
+
+```mermaid
+flowchart TD
+    A["CUSTOMER_DATA.REGION"]
+    B["CUSTOMER_ACTIVITY.REGION"]
+
+    A --> B
 ```
 
 ### Branch Information
 
-```text
-CUSTOMER_DATA.BRANCH_ID
-            ↓
-BANK_DATA.BRANCH_ID
-            ↓
-BANK_DATA.REGION / BANK_DATA.CITY
-            ↓
-Target Analytical Context
+The following diagram was created using Mermaid and is rendered directly in GitHub Markdown.
+
+```mermaid
+flowchart TD
+    A["CUSTOMER_DATA.BRANCH_ID"]
+    B["BANK_DATA.BRANCH_ID"]
+    C["BANK_DATA.REGION / BANK_DATA.CITY"]
+    D["Target Analytical Context"]
+
+    A --> B
+    B --> C
+    C --> D
 ```
 
 The exact use of branch-level attributes depends on the analytical requirement and final target model.
@@ -278,14 +317,18 @@ The exact use of branch-level attributes depends on the analytical requirement a
 
 The target dataset is based on the full customer population.
 
-```text
-CUSTOMER_DATA
-      ↓
-All Customers
-      ↓
-LEFT JOIN Transaction Aggregates
-      ↓
-CUSTOMER_ACTIVITY
+The following diagram was created using Mermaid and is rendered directly in GitHub Markdown.
+
+```mermaid
+flowchart TD
+    A["CUSTOMER_DATA"]
+    B["All Customers"]
+    C["LEFT JOIN Transaction Aggregates"]
+    D["CUSTOMER_ACTIVITY"]
+
+    A --> B
+    B --> C
+    C --> D
 ```
 
 This design preserves customers who do not have transactions during the selected analysis period.
@@ -301,18 +344,22 @@ For customers without transactions, the relevant metrics are populated according
 
 Potential duplicate transactions are identified during data quality validation.
 
-```text
-TRANSACTION_DATA
-      ↓
-Duplicate Detection
-      ↓
-Investigate Potential Duplicates
-      ↓
-Confirm Duplicate
-      ↓
-Exclude Confirmed Duplicate
-      ↓
-Analytical Calculation
+The following diagram was created using Mermaid and is rendered directly in GitHub Markdown.
+
+```mermaid
+flowchart TD
+    A["TRANSACTION_DATA"]
+    B["Duplicate Detection"]
+    C["Investigate Potential Duplicates"]
+    D["Confirm Duplicate"]
+    E["Exclude Confirmed Duplicate"]
+    F["Analytical Calculation"]
+
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
 ```
 
 Confirmed duplicate transactions must not inflate customer activity metrics.
@@ -326,22 +373,26 @@ Potential duplicates should be investigated before being excluded.
 <details>
 <summary><strong>13. End-to-End Example</strong></summary>
 
-The following example shows the lineage of a calculated customer metric:
+The following example shows the lineage of a calculated customer metric.
 
-```text
-TRANSACTION_DATA.TRANSACTION_AMOUNT
-              ↓
-Select Transactions Within Analysis Period
-              ↓
-Validate Transaction
-              ↓
-Group by CUSTOMER_ID
-              ↓
-SUM
-              ↓
-CUSTOMER_ACTIVITY.TOTAL_TRANSACTION_AMOUNT
-              ↓
-Power BI
+The following diagram was created using Mermaid and is rendered directly in GitHub Markdown.
+
+```mermaid
+flowchart TD
+    A["TRANSACTION_DATA.TRANSACTION_AMOUNT"]
+    B["Select Transactions Within Analysis Period"]
+    C["Validate Transaction"]
+    D["Group by CUSTOMER_ID"]
+    E["SUM"]
+    F["CUSTOMER_ACTIVITY.TOTAL_TRANSACTION_AMOUNT"]
+    G["Power BI"]
+
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+    F --> G
 ```
 
 This provides traceability from the original source field to the final reporting output.
@@ -376,30 +427,34 @@ This supports validation and makes it easier to investigate changes or unexpecte
 
 The main lineage paths can be summarized as:
 
-```text
-CUSTOMER_DATA
-      ↓
-Customer Attributes
-      ↓
-CUSTOMER_ACTIVITY
+The following diagram was created using Mermaid and is rendered directly in GitHub Markdown.
 
-TRANSACTION_DATA
-      ↓
-Transaction Attributes
-      ↓
-Filtering / Aggregation / Business Rules
-      ↓
-Customer Activity Metrics
-      ↓
-CUSTOMER_ACTIVITY
+```mermaid
+flowchart TD
+    A["CUSTOMER_DATA"]
+    B["Customer Attributes"]
+    C["CUSTOMER_ACTIVITY"]
 
-BANK_DATA
-      ↓
-Branch / Regional Attributes
-      ↓
-Customer Analytical Context
-      ↓
-CUSTOMER_ACTIVITY
+    D["TRANSACTION_DATA"]
+    E["Transaction Attributes"]
+    F["Filtering / Aggregation / Business Rules"]
+    G["Customer Activity Metrics"]
+
+    H["BANK_DATA"]
+    I["Branch / Regional Attributes"]
+    J["Customer Analytical Context"]
+
+    A --> B
+    B --> C
+
+    D --> E
+    E --> F
+    F --> G
+    G --> C
+
+    H --> I
+    I --> J
+    J --> C
 ```
 
 The detailed lineage provides the traceability required to understand how source data contributes to the final analytical dataset.
@@ -410,7 +465,7 @@ The detailed lineage provides the traceability required to understand how source
 
 ### Related Diagram
 
-The graphical Data Lineage artefact will be created in diagrams.net and stored in this project section.
+A more detailed graphical Data Lineage diagram may be created in diagrams.net and stored with the project documentation.
 
 - [Data Lineage Diagram](./data_lineage_diagram.drawio)
 
