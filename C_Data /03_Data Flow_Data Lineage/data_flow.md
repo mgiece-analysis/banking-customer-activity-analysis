@@ -30,27 +30,34 @@ Data Flow focuses on the movement of data between major components rather than i
 
 The overall data flow for the project is:
 
-```text
-CUSTOMER_DATA
-TRANSACTION_DATA
-BANK_DATA
-      ↓
-Source Data Validation
-      ↓
-Data Integration
-      ↓
-Data Transformation
-      ↓
-Business Rules
-      ↓
-CUSTOMER_ACTIVITY
-      ↓
-Validation
-      ↓
-Power BI / Further Analysis
+The following diagram was created using Mermaid and is rendered directly in GitHub Markdown.
+
+```mermaid
+flowchart TD
+    A["CUSTOMER_DATA"]
+    B["TRANSACTION_DATA"]
+    C["BANK_DATA"]
+
+    D["Source Data Validation"]
+    E["Data Integration"]
+    F["Data Transformation"]
+    G["Business Rules"]
+    H["CUSTOMER_ACTIVITY"]
+    I["Target Data Validation"]
+    J["Power BI / Further Analysis"]
+
+    A --> D
+    B --> D
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+    G --> H
+    H --> I
+    I --> J
 ```
 
-The flow represents the main stages from source data to analytical output.
+This diagram shows the main stages through which data moves from source datasets to the final analytical and reporting layer.
 
 </details>
 
@@ -223,28 +230,33 @@ The reporting layer consumes the prepared analytical dataset.
 
 The complete high-level flow can be summarized as:
 
-```text
-CUSTOMER_DATA
-        +
-TRANSACTION_DATA
-        +
-BANK_DATA
-        ↓
-Data Quality Checks
-        ↓
-Data Integration
-        ↓
-Data Transformation
-        ↓
-Business Rules
-        ↓
-CUSTOMER_ACTIVITY
-        ↓
-Target Data Validation
-        ↓
-Power BI
-        ↓
-Further Analysis / Reporting
+The following diagram was created using Mermaid and is rendered directly in GitHub Markdown.
+
+```mermaid
+flowchart TD
+    A["CUSTOMER_DATA"]
+    B["TRANSACTION_DATA"]
+    C["BANK_DATA"]
+
+    D["Data Quality Checks"]
+    E["Data Integration"]
+    F["Data Transformation"]
+    G["Business Rules"]
+    H["CUSTOMER_ACTIVITY"]
+    I["Validation"]
+    J["Power BI"]
+    K["Further Analysis / Reporting"]
+
+    A --> D
+    B --> D
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+    G --> H
+    H --> I
+    I --> J
+    J --> K
 ```
 
 This diagram represents the overall movement of data through the analytical solution.
@@ -273,7 +285,7 @@ These details are outside the scope of this high-level Data Flow documentation.
 
 ### Related Diagram
 
-The graphical Data Flow / Data Lineage artefact will be created in diagrams.net and stored in this project section.
+A more detailed graphical Data Flow diagram may be created in diagrams.net and stored with the project documentation.
 
 - [Data Flow Diagram](./data_flow_diagram.drawio)
 
