@@ -285,7 +285,7 @@ These details are outside the scope of this high-level Data Flow documentation.
 
 ### Related Diagram
 
-A more detailed graphical Data Flow diagram may be created in diagrams.net and stored with the project documentation.
+A more detailed graphical Data Flow diagram has been created in diagrams.net and stored with the project documentation.
 
 - [Data Flow Diagram XML](./data_flow_diagram.drawio)
 - [Data Flow Diagram PNG](./data_flow_diagram.png)
