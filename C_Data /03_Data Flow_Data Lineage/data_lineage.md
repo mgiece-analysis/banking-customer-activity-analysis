@@ -467,7 +467,8 @@ The detailed lineage provides the traceability required to understand how source
 
 A more detailed graphical Data Lineage diagram may be created in diagrams.net and stored with the project documentation.
 
-- [Data Lineage Diagram](./data_lineage_diagram.drawio)
+- [Data Lineage Diagram XML](./data_lineage_diagram.drawio)
+- [Data Lineage Diagram PNG](./data_lineage_diagram.png)
 
 ---
 
