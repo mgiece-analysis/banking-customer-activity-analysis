@@ -1,0 +1,49 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0">
+  <diagram id="data-flow" name="Data Flow">
+    <mxGraphModel dx="2717" dy="834" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="customer" parent="1" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" value="&lt;b&gt;CUSTOMER_DATA&lt;/b&gt;&lt;br&gt;Customer data" vertex="1">
+          <mxGeometry height="80" width="190" x="-30" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="tx" parent="1" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" value="&lt;b&gt;TRANSACTION_DATA&lt;/b&gt;&lt;br&gt;Transaction data" vertex="1">
+          <mxGeometry height="80" width="190" x="-30" y="235" as="geometry" />
+        </mxCell>
+        <mxCell id="bank" parent="1" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" value="&lt;b&gt;BANK_DATA&lt;/b&gt;&lt;br&gt;Branch reference data" vertex="1">
+          <mxGeometry height="80" width="190" x="-30" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="prep" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;" value="&lt;b&gt;CUSTOMER ACTIVITY&lt;br&gt;DATA PREPARATION&lt;/b&gt;&lt;br&gt;&lt;br&gt;Join → Transform → Business Rules → Validation" vertex="1">
+          <mxGeometry height="170" width="300" x="340" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="target" parent="1" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" value="&lt;b&gt;CUSTOMER_ACTIVITY&lt;/b&gt;&lt;br&gt;Analytical dataset" vertex="1">
+          <mxGeometry height="90" width="220" x="840" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="powerbi" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;" value="&lt;b&gt;POWER BI&lt;/b&gt;&lt;br&gt;Reporting / Analytical use" vertex="1">
+          <mxGeometry height="80" width="200" x="1240" y="235" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="customer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;endArrow=block;html=1;" target="prep" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="tx" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;endArrow=block;html=1;" target="prep" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="bank" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;endArrow=block;html=1;" target="prep" value="Reference / validation">
+          <mxGeometry relative="1" x="0.4099" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="prep" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;endArrow=block;html=1;" target="target" value="Customer-level dataset">
+          <mxGeometry relative="1" x="0.1" y="15" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="target" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;endArrow=block;html=1;" target="powerbi" value="Read / analyze">
+          <mxGeometry relative="1" x="0.0588" y="15" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
